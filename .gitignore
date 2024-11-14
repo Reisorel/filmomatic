@@ -1,0 +1,5 @@
+# Ignorer le dossier des photos en développement :
+/Frontend/public/assets/people/
+
+# Ignorer la base de donnée de développement :
+/Backend/data/data-dev.js

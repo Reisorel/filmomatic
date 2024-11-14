@@ -1,0 +1,44 @@
+.launching-button {
+  background-color: #E50914;
+  font-family: "Poppins", sans-serif;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 60px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.launching-button:hover {
+  transform: translateY(-5px);
+  background-color: rgb(95, 14, 14);
+}
+
+.launching-button:disabled {
+  background-color: grey; /* Change la couleur du bouton lorsqu'il est désactivé */
+  cursor: not-allowed; /* Change le curseur pour montrer que le bouton est inactif */
+  transform: none; /* Désactive l'effet de survol */
+}
+
+.anonymous-button {
+  background-color: #E50914;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 60px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s;
+  margin-right: 10px;
+}
+
+.anonymous-button:hover {
+  transform: translateY(-5px);
+  background-color: rgb(95, 14, 14);
+}
