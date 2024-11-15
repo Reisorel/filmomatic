@@ -1,9 +1,9 @@
 @charset "UTF-8";
 .profile {
   display: flex;
+  flex-direction: column;
   padding: 20px;
   width: 120px;
-  flex-direction: column;
   align-items: center;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.05); /* Fond semi-transparent */
@@ -20,12 +20,16 @@
 }
 
 .profile.central {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   margin: 20px;
+  width: 120px;
   background-color: rgba(255, 255, 255, 0.1);
   border: 2px solid #FFD700; /* Bordure dorée pour indiquer la carte spéciale */
   box-shadow: 0 8px 16px rgba(255, 215, 0, 0.3); /* Ombre dorée */
   transform: scale(1.2);
+  justify-content: space-between; /* Espace les éléments pour que l'image soit en bas */
 }
 
 .participant-info {
@@ -72,10 +76,6 @@
   line-height: 1.4; /* Améliore la lisibilité des descriptions plus longues */
   min-height: 18px; /* Assure une hauteur minimum pour éviter les sauts entre les cartes */
   word-wrap: break-word; /* Coupe les mots trop longs s'ils dépassent */
-}
-
-.not-passed {
-  color: rgb(208, 65, 13);
 }
 
 .participant-photo {

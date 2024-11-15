@@ -14,7 +14,7 @@ const peopleListData = [
     nom: "Alice",
     genreFavori: "Comédie Musicale",
     passe: true,
-    film: "Rocky Horror Picture Show",
+    filmName: "Rocky Horror Picture Show",
     photo: "/assets/people/alice.png",
     image: "/assets/movies/rocky.png",
     useQuestionIcon: false,
@@ -23,7 +23,7 @@ const peopleListData = [
     nom: "Cassandre",
     genreFavori: "Historique",
     passe: false,
-    film: "Les Visiteurs",
+    filmName: "Les Visiteurs",
     photo: "/assets/people/cassandre.png",
     image: "/assets/movies/visiteurs.png",
     useQuestionIcon: true,
@@ -32,7 +32,7 @@ const peopleListData = [
     nom: "Franz",
     genreFavori: "Horreur",
     passe: true,
-    film: "The Shining",
+    filmName: "The Shining",
     photo: "/assets/people/franz.png",
     image: "/assets/movies/shining.jpg",
     useQuestionIcon: false,
@@ -41,7 +41,7 @@ const peopleListData = [
     nom: "Julie",
     genreFavori: "Comédie Romantique",
     passe: false,
-    film: "Amélie Poulain",
+    filmName: "Amélie Poulain",
     photo: "/assets/people/julie.png",
     image: "/assets/movies/poulain.png",
     useQuestionIcon: true,
@@ -50,7 +50,7 @@ const peopleListData = [
     nom: "Léa",
     genreFavori: "Fantasy",
     passe: false,
-    film: "Le Coeur Des Hommes",
+    filmName: "Le Coeur Des Hommes",
     photo: "/assets/people/lea.png",
     image: "/assets/movies/coeur.jpg",
     useQuestionIcon: true,
@@ -59,7 +59,7 @@ const peopleListData = [
     nom: "Louis",
     genreFavori: "Science Fiction",
     passe: false,
-    film: "Nope",
+    filmName: "Nope",
     photo: "/assets/people/louis.png",
     image: "/assets/movies/nope.png",
     useQuestionIcon: true,
@@ -68,19 +68,21 @@ const peopleListData = [
     nom: "Peheme",
     genreFavori: "Comédie US",
     passe: false,
-    film: "American Pie 1",
+    filmName: "American Pie 1",
     photo: "/assets/people/peheme.png",
     image: "/assets/movies/american.png",
     useQuestionIcon: true,
   },
 ];
 
+const faQuestion = <FaQuestion className="participant-film-icon" />
+
 const anonymousProfile = {
   nom: "Anne O'Nyme",
-  film: "Film Mystère",
+  filmName: "Film Mystère",
   genreFavori: "Genre Mystère",
   photo: "/assets/anonyme/anonyme.png",
-  image: "/assets/movies/american.png",
+  image: faQuestion,
   useQuestionIcon: true
 };
 
@@ -227,20 +229,27 @@ function App() {
         <div className="main-container" ref={mainContainerRef}>
           {peopleList.map((person, index) => {
             const displayPerson = isAnonymousMode && !person.passe
-              ? { ...person, photo: anonymousProfile.photo, nom: anonymousProfile.nom, film: anonymousProfile.film, genreFavori: anonymousProfile.genreFavori }
+              ? { ...person,
+                photo: anonymousProfile.photo,
+                nom: anonymousProfile.nom,
+                filmName: anonymousProfile.filmName,
+                genreFavori: anonymousProfile.genreFavori,
+                anonymouse: true,
+               }
               : person;
 
             return (
               <Participant
                 key={index}
+                isCentral={index === centralIndex}
                 nom={displayPerson.nom}
-                film={displayPerson.film}
-                genreFavori={displayPerson.genreFavori}
                 photo={displayPerson.photo}
+                filmName={displayPerson.filmName}
+                genreFavori={displayPerson.genreFavori}
                 passe={person.passe}
                 image={displayPerson.image}
-                isCentral={index === centralIndex}
                 useQuestionIcon={displayPerson.useQuestionIcon}
+                anonymouse={displayPerson.anonymouse}
               />
             );
           })}
