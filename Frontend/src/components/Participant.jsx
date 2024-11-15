@@ -20,7 +20,7 @@ export default function Participant({
   ) : (
     <div
       onClick={() => !passe && setIsFilmRevealed(true)}
-      className="mystery-content"
+      className="participant-film-icon"
     >
       <FaQuestion className="participant-film-icon" />
     </div>
