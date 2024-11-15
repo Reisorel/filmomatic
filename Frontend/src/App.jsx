@@ -9,6 +9,8 @@ import Result from "./components/Result";
 import gsap from "gsap";
 import { FaQuestion } from "react-icons/fa6";
 
+
+
 const peopleListData = [
   {
     nom: "Alice",
@@ -75,17 +77,6 @@ const peopleListData = [
   },
 ];
 
-const faQuestion = <FaQuestion className="participant-film-icon" />
-
-const anonymousProfile = {
-  nom: "Anne O'Nyme",
-  filmName: "Film Mystère",
-  genreFavori: "Genre Mystère",
-  photo: "/assets/anonyme/anonyme.png",
-  image: faQuestion,
-  useQuestionIcon: true
-};
-
 function App() {
   // Mélange aléatoire de la liste
   const shuffleArray = (array) => {
@@ -98,14 +89,18 @@ function App() {
     const shuffledList = shuffleArray([...peopleListData]);
 
     // Cherche un participant déjà marqué comme "passe" pour le mettre au centre
-    const centralParticipant = shuffledList.find(person => person.passe === true);
+    const centralParticipant = shuffledList.find(
+      (person) => person.passe === true
+    );
 
     // Si un participant "passe=true" est trouvé, le mettre au centre
     if (centralParticipant) {
       const centralIndex = Math.floor(shuffledList.length / 2);
 
       // On s'assure que ce participant "passe=true" reste au centre, en l'échangeant si nécessaire
-      const updatedList = shuffledList.filter(person => person.nom !== centralParticipant.nom);
+      const updatedList = shuffledList.filter(
+        (person) => person.nom !== centralParticipant.nom
+      );
       updatedList.splice(centralIndex, 0, centralParticipant); // Place le participant au centre
 
       return updatedList;
@@ -116,6 +111,11 @@ function App() {
   });
 
   const [isAnonymousMode, setIsAnonymousMode] = useState(false);
+
+  const toggleAnonymousMode = () => {
+    setIsAnonymousMode(prevState => !prevState);
+  };
+
   const [drawnParticipants, setDrawnParticipants] = useState({});
   const [selectedParticipant, setSelectedParticipant] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -123,31 +123,31 @@ function App() {
   const centralIndex = Math.floor(peopleList.length / 2); // Position centrale de l'élément
 
   //Active / désactive le mode anonyme
-  const toggleAnonymousMode = () => {
-    setIsAnonymousMode(prevState => {
-      const newMode = !prevState;
-      const photos = document.querySelectorAll(".participant-photo");
+//  const toggleAnonymousMode = () => {
+//     setIsAnonymousMode((prevState) => {
+//       const newMode = !prevState;
+//       const photos = document.querySelectorAll(".participant-photo");
 
-      photos.forEach((photo, index) => {
-        // On vérifie ici si le participant n'est pas en statut "passe"
-        if (!peopleList[index].passe) {
-          // Supprime toutes les classes d'animation précédentes
-          photo.classList.remove("flip-to-anonymous", "flip-to-normal");
+//       photos.forEach((photo, index) => {
+//         // On vérifie ici si le participant n'est pas en statut "passe"
+//         if (!peopleList[index].passe) {
+//           // Supprime toutes les classes d'animation précédentes
+//           photo.classList.remove("flip-to-anonymous", "flip-to-normal");
 
-          // Ajoute l'animation selon le nouveau mode anonyme
-          if (newMode) {
-            // Passage en mode anonyme
-            photo.classList.add("flip-to-anonymous");
-          } else {
-            // Retour au mode normal
-            photo.classList.add("flip-to-normal");
-          }
-        }
-      });
+//           // Ajoute l'animation selon le nouveau mode anonyme
+//           if (newMode) {
+//             // Passage en mode anonyme
+//             photo.classList.add("flip-to-anonymous");
+//           } else {
+//             // Retour au mode normal
+//             photo.classList.add("flip-to-normal");
+//           }
+//         }
+//       });
 
-      return newMode;
-    });
-  };
+//       return newMode;
+//     });
+//   };
 
   // Fonction lancer un tirage
   const handleDraw = () => {
@@ -174,7 +174,9 @@ function App() {
         const chosenPerson = availablePeople[randomIndex];
 
         setPeopleList((prevList) => {
-          const centeredList = prevList.filter((person) => person.nom !== chosenPerson.nom);
+          const centeredList = prevList.filter(
+            (person) => person.nom !== chosenPerson.nom
+          );
           centeredList.splice(centralIndex, 0, chosenPerson); // Place le participant tiré au centre
           return centeredList;
         });
@@ -184,13 +186,19 @@ function App() {
 
     timeline
       .to(mainContainerRef.current, {
-        rotation: "+=720", duration: 2, ease: "power2.in",
+        rotation: "+=720",
+        duration: 2,
+        ease: "power2.in",
       })
       .to(mainContainerRef.current, {
-        rotation: "+=1440", duration: 3, ease: "none",
+        rotation: "+=1440",
+        duration: 3,
+        ease: "none",
       })
       .to(mainContainerRef.current, {
-        rotation: "+=360", duration: 3, ease: "power2.out",
+        rotation: "+=360",
+        duration: 3,
+        ease: "power2.out",
       });
 
     const shuffleInterval = setInterval(() => {
@@ -223,36 +231,26 @@ function App() {
         <Launching
           handleDraw={handleDraw}
           isDrawing={isDrawing}
-          toggleAnonymousMode={toggleAnonymousMode}
           isAnonymousMode={isAnonymousMode}
+          toggleAnonymousMode={toggleAnonymousMode}
+
         />
         <div className="main-container" ref={mainContainerRef}>
-          {peopleList.map((person, index) => {
-            const displayPerson = isAnonymousMode && !person.passe
-              ? { ...person,
-                photo: anonymousProfile.photo,
-                nom: anonymousProfile.nom,
-                filmName: anonymousProfile.filmName,
-                genreFavori: anonymousProfile.genreFavori,
-                anonymouse: true,
-               }
-              : person;
-
-            return (
-              <Participant
-                key={index}
-                isCentral={index === centralIndex}
-                nom={displayPerson.nom}
-                photo={displayPerson.photo}
-                filmName={displayPerson.filmName}
-                genreFavori={displayPerson.genreFavori}
-                passe={person.passe}
-                image={displayPerson.image}
-                useQuestionIcon={displayPerson.useQuestionIcon}
-                anonymouse={displayPerson.anonymouse}
-              />
-            );
-          })}
+          {peopleList.map((person, index) => (
+            <Participant
+              key={index}
+              isCentral={index === centralIndex}
+              nom={person.nom}
+              photo={person.photo}
+              filmName={person.filmName}
+              genreFavori={person.genreFavori}
+              passe={person.passe}
+              image={person.image}
+              useQuestionIcon={person.useQuestionIcon}
+              isAnonymousMode={isAnonymousMode}
+              toggleAnonymousMode={toggleAnonymousMode}
+            />
+          ))}
         </div>
         <Result selectedParticipant={selectedParticipant} />
       </Background>

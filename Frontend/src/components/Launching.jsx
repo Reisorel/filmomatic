@@ -1,4 +1,5 @@
 import "./Launching.css";
+import Participant from "./Participant";
 
 export default function Launching({ handleDraw, isDrawing, toggleAnonymousMode, isAnonymousMode }) {
   return (
