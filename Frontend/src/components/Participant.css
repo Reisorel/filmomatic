@@ -20,7 +20,8 @@
 }
 
 .profile.central {
-  padding: 25px;
+  padding: 20px;
+  margin: 20px;
   background-color: rgba(255, 255, 255, 0.1);
   border: 2px solid #FFD700; /* Bordure dorée pour indiquer la carte spéciale */
   box-shadow: 0 8px 16px rgba(255, 215, 0, 0.3); /* Ombre dorée */

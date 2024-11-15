@@ -9,7 +9,6 @@ import Result from "./components/Result";
 import gsap from "gsap";
 import { FaQuestion } from "react-icons/fa6";
 
-
 const peopleListData = [
   {
     nom: "Alice",
