@@ -46,9 +46,13 @@ export default function Participant({
     // Si le film n'est pas encore révélé, le révéler
     if (!isFilmRevealed) {
       setIsFilmRevealed(true);
+      console.log("clic1");
+
     } else {
       // Si le film est déjà révélé, remettre le mode anonyme
       setIsFilmRevealed(false);
+      console.log("clic2");
+
     }
   };
 
