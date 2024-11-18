@@ -34,10 +34,8 @@ export default function Participant({
     // Définit la classe de flip selon le mode anonyme
     if (isAnonymousMode) {
       setPhotoFlipClass("flip-to-anonymous");
-      setFilmFlipClass("flip-to-anonymous");
     } else {
       setPhotoFlipClass("flip-to-normal");
-      setFilmFlipClass("flip-to-normal");
     }
   }, [isRevealed, isAnonymousMode]);
 

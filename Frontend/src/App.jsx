@@ -129,7 +129,7 @@ function App() {
   const handleDraw = () => {
     setIsDrawing(true);
 
-    // Révéler complètement le participant central avant le tirage
+    // Révéler complètement le participant central avant le prochain tirage
     const currentWinner = peopleList[centralIndex];
     setPeopleList((prevList) =>
       prevList.map((person) =>
