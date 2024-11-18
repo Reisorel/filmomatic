@@ -11,6 +11,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre douce pour profondeur */
   transition: transform 0.2s, box-shadow 0.2s;
   justify-content: space-between; /* Espace les éléments pour que l'image soit en bas */
+  margin-bottom: 40px;
 }
 
 .profile:hover {
@@ -21,9 +22,10 @@
 .profile.central {
   display: flex;
   flex-direction: column;
-
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 60px;
   padding: 20px;
-  margin: 20px;
   width: 120px;
   background-color: rgba(255, 255, 255, 0.1);
   border: 2px solid #FFD700; /* Bordure dorée pour indiquer la carte spéciale */
@@ -115,6 +117,14 @@
 }
 
 .participant-photo.flip-to-normal {
+  animation: flipToNormal 0.5s ease-out forwards;
+}
+
+.film-container.flip-to-anonymous {
+  animation: flipToAnonymous 0.5s ease-out forwards;
+}
+
+.film-container-photo.flip-to-normal {
   animation: flipToNormal 0.5s ease-out forwards;
 }
 

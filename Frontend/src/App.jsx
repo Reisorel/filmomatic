@@ -9,13 +9,12 @@ import Result from "./components/Result";
 import gsap from "gsap";
 import { FaQuestion } from "react-icons/fa6";
 
-
-
 const peopleListData = [
   {
     nom: "Alice",
     genreFavori: "Comédie Musicale",
     passe: true,
+    isRevealed: true,
     filmName: "Rocky Horror Picture Show",
     photo: "/assets/people/alice.png",
     image: "/assets/movies/rocky.png",
@@ -25,6 +24,7 @@ const peopleListData = [
     nom: "Cassandre",
     genreFavori: "Historique",
     passe: false,
+    isRevealed: false,
     filmName: "Les Visiteurs",
     photo: "/assets/people/cassandre.png",
     image: "/assets/movies/visiteurs.png",
@@ -34,6 +34,7 @@ const peopleListData = [
     nom: "Franz",
     genreFavori: "Horreur",
     passe: true,
+    isRevealed: true,
     filmName: "The Shining",
     photo: "/assets/people/franz.png",
     image: "/assets/movies/shining.jpg",
@@ -43,6 +44,7 @@ const peopleListData = [
     nom: "Julie",
     genreFavori: "Comédie Romantique",
     passe: false,
+    isRevealed: false,
     filmName: "Amélie Poulain",
     photo: "/assets/people/julie.png",
     image: "/assets/movies/poulain.png",
@@ -52,6 +54,7 @@ const peopleListData = [
     nom: "Léa",
     genreFavori: "Fantasy",
     passe: false,
+    isRevealed: false,
     filmName: "Le Coeur Des Hommes",
     photo: "/assets/people/lea.png",
     image: "/assets/movies/coeur.jpg",
@@ -61,6 +64,7 @@ const peopleListData = [
     nom: "Louis",
     genreFavori: "Science Fiction",
     passe: false,
+    isRevealed: false,
     filmName: "Nope",
     photo: "/assets/people/louis.png",
     image: "/assets/movies/nope.png",
@@ -70,6 +74,7 @@ const peopleListData = [
     nom: "Peheme",
     genreFavori: "Comédie US",
     passe: false,
+    isRevealed: false,
     filmName: "American Pie 1",
     photo: "/assets/people/peheme.png",
     image: "/assets/movies/american.png",
@@ -113,54 +118,35 @@ function App() {
   const [isAnonymousMode, setIsAnonymousMode] = useState(false);
 
   const toggleAnonymousMode = () => {
-    setIsAnonymousMode(prevState => !prevState);
+    setIsAnonymousMode((prevState) => !prevState);
   };
 
-  const [drawnParticipants, setDrawnParticipants] = useState({});
   const [selectedParticipant, setSelectedParticipant] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const mainContainerRef = useRef(null);
-  const centralIndex = Math.floor(peopleList.length / 2); // Position centrale de l'élément
+  const centralIndex = Math.floor(peopleList.length / 2);
 
-  //Active / désactive le mode anonyme
-//  const toggleAnonymousMode = () => {
-//     setIsAnonymousMode((prevState) => {
-//       const newMode = !prevState;
-//       const photos = document.querySelectorAll(".participant-photo");
-
-//       photos.forEach((photo, index) => {
-//         // On vérifie ici si le participant n'est pas en statut "passe"
-//         if (!peopleList[index].passe) {
-//           // Supprime toutes les classes d'animation précédentes
-//           photo.classList.remove("flip-to-anonymous", "flip-to-normal");
-
-//           // Ajoute l'animation selon le nouveau mode anonyme
-//           if (newMode) {
-//             // Passage en mode anonyme
-//             photo.classList.add("flip-to-anonymous");
-//           } else {
-//             // Retour au mode normal
-//             photo.classList.add("flip-to-normal");
-//           }
-//         }
-//       });
-
-//       return newMode;
-//     });
-//   };
-
-  // Fonction lancer un tirage
   const handleDraw = () => {
     setIsDrawing(true);
-    const availablePeople = peopleList.filter(
-      (person) => !drawnParticipants[person.nom] && !person.passe
+
+    // Révéler complètement le participant central avant le tirage
+    const currentWinner = peopleList[centralIndex];
+    setPeopleList((prevList) =>
+      prevList.map((person) =>
+        person.nom === currentWinner.nom
+          ? { ...person, isRevealed: true } // Révéler film et identité
+          : person
+      )
     );
+
+    const availablePeople = peopleList.filter((person) => !person.passe);
 
     if (availablePeople.length === 0) {
       alert("Tous les participants ont déjà été tirés !");
       setIsDrawing(false);
       return;
     }
+
     startDraw(availablePeople);
   };
 
@@ -211,13 +197,11 @@ function App() {
   };
 
   const finalizeDraw = (chosenPerson) => {
-    setDrawnParticipants((prevState) => ({
-      ...prevState,
-      [chosenPerson.nom]: true,
-    }));
     setPeopleList((prevList) =>
       prevList.map((person) =>
-        person.nom === chosenPerson.nom ? { ...person, passe: true } : person
+        person.nom === chosenPerson.nom
+          ? { ...person, passe: true, isRevealed: !isAnonymousMode }
+          : person
       )
     );
     setSelectedParticipant(chosenPerson);
@@ -233,7 +217,6 @@ function App() {
           isDrawing={isDrawing}
           isAnonymousMode={isAnonymousMode}
           toggleAnonymousMode={toggleAnonymousMode}
-
         />
         <div className="main-container" ref={mainContainerRef}>
           {peopleList.map((person, index) => (
@@ -244,15 +227,15 @@ function App() {
               photo={person.photo}
               filmName={person.filmName}
               genreFavori={person.genreFavori}
-              passe={person.passe}
               image={person.image}
               useQuestionIcon={person.useQuestionIcon}
+              passe={person.passe}
+              isRevealed={person.isRevealed}
               isAnonymousMode={isAnonymousMode}
-              toggleAnonymousMode={toggleAnonymousMode}
             />
           ))}
         </div>
-        <Result selectedParticipant={selectedParticipant} />
+        {/* <Result selectedParticipant={selectedParticipant} /> */}
       </Background>
       <Footer />
     </div>

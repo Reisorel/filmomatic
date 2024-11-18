@@ -9,93 +9,91 @@ export default function Participant({
   photo,
   image,
   passe,
+  isRevealed,
   isCentral,
-  isAnonymousMode,  // Utilisation de l'état du mode anonyme en props
+  isAnonymousMode,
 }) {
-  const faQuestion = <FaQuestion className="participant-film-icon" />
-
-  const anonymouseProfile = {
+  const anonymousProfile = {
     nom: "Anne O'Nyme",
-    filmName: "Film Mystère",
     genreFavori: "Genre Mystère",
+    filmName: "Film Mystère",
     photo: "/assets/anonyme/anonyme.png",
-    image: faQuestion,
-    useQuestionIcon: true
+    image: <FaQuestion className="participant-film-icon" />,
   };
 
-  const [isFilmRevealed, setIsFilmRevealed] = useState(passe); // Par défaut, révélé si passe est true
-  const [isIdentityRevealed, setIsIdentityRevealed] = useState(!isAnonymousMode || passe); // Identité révélée par défaut si non anonyme ou si "passe" est true
+  const [filmRevealed, setFilmRevealed] = useState(isRevealed); // Contrôle le film
+  const [identityRevealed, setIdentityRevealed] = useState(isRevealed); // Contrôle l'identité
+  const [photoFlipClass, setPhotoFlipClass] = useState(""); // Classe d'animation pour la photo
+  const [filmFlipClass, setFilmFlipClass] = useState(""); // Classe d'animation pour le film
 
   useEffect(() => {
-    // Si le mode anonyme change, réinitialiser les états en conséquence
+    // Synchronise les états locaux avec les props initiales
+    setFilmRevealed(isRevealed);
+    setIdentityRevealed(isRevealed);
+
+    // Définit la classe de flip selon le mode anonyme
     if (isAnonymousMode) {
-      // En mode anonyme, cacher l'identité sauf si passe est true
-      setIsIdentityRevealed(passe); // Si passe est true, l'identité reste révélée
+      setPhotoFlipClass("flip-to-anonymous");
+      setFilmFlipClass("flip-to-anonymous");
     } else {
-      setIsIdentityRevealed(true); // En mode normal, toujours révéler l'identité
+      setPhotoFlipClass("flip-to-normal");
+      setFilmFlipClass("flip-to-normal");
     }
+  }, [isRevealed, isAnonymousMode]);
 
-    if (passe) {
-      setIsFilmRevealed(true); // Toujours révéler le film pour les participants ayant passe:true
-    } else if (isAnonymousMode) {
-      setIsFilmRevealed(false); // Réinitialiser le film en mode anonyme si non révélé
-    }
-  }, [isAnonymousMode, passe]);
-
-  const handleRevealFilm = () => {
-    // Si le film n'est pas encore révélé, le révéler
-    if (!isFilmRevealed) {
-      setIsFilmRevealed(true);
-      console.log("clic");
-
-    } else {
-      // Si le film est déjà révélé, remettre le mode anonyme
-      setIsFilmRevealed(false);
-      console.log("clic2");
-
-    }
+  const toggleReveal = (stateSetter, flipSetter) => {
+    // Ajoute ou retire les classes de flip
+    flipSetter((prev) =>
+      prev === "flip-to-anonymous" ? "flip-to-normal" : "flip-to-anonymous"
+    );
+    // Bascule l'état local
+    stateSetter((prevState) => !prevState);
   };
 
-  const handleRevealIdentity = () => {
-    if (!isIdentityRevealed) {
-      setIsIdentityRevealed(true); // Révéler manuellement l'identité
-    }
-  };
+  // Logique d'affichage pour l'identité
+  const displayedIdentity =
+    isAnonymousMode && !identityRevealed
+      ? anonymousProfile
+      : { nom, genreFavori, photo };
 
-  // Affichage conditionnel basé sur l'état
-  const displayedPhoto = isIdentityRevealed ? photo : anonymouseProfile.photo;
-  const displayedName = isIdentityRevealed ? nom : anonymouseProfile.nom;
-  const displayedGenre = isIdentityRevealed ? genreFavori : anonymouseProfile.genreFavori;
-  const displayedFilmName = isFilmRevealed ? filmName : anonymouseProfile.filmName;
-
-  // Affichage conditionnel de l'image ou de l'icône de question
-  const imageDisplay = isFilmRevealed ? (
-    <img src={image} alt="Film" className="participant-film-image" />
-  ) : (
-    <FaQuestion
-      className="participant-film-icon"
-      onClick={handleRevealFilm} // Active le clic pour révéler le film
+  // Logique d'affichage pour le film
+  const displayedFilmName = filmRevealed ? filmName : anonymousProfile.filmName;
+  const displayedFilmImage = filmRevealed ? (
+    <img
+      src={image}
+      alt={displayedFilmName}
+      className={`participant-film-image ${filmFlipClass}`}
     />
+  ) : (
+    anonymousProfile.image
   );
 
   return (
     <div className={`profile ${isCentral ? "central" : ""}`}>
-      {/* Affichage de la photo, avec bascule d'identité au clic */}
+      {/* Affichage de l'identité */}
       <div
-        className="participant-photo-container"
-        onClick={!isIdentityRevealed ? handleRevealIdentity : undefined}
+        className={`participant-photo-container ${photoFlipClass}`}
+        onClick={() => toggleReveal(setIdentityRevealed, setPhotoFlipClass)}
       >
-        <img src={displayedPhoto} alt={displayedName} className="participant-photo" />
+        <img
+          src={displayedIdentity.photo}
+          alt={displayedIdentity.nom}
+          className={`participant-photo ${photoFlipClass}`}
+        />
       </div>
 
-      {/* Nom et genre conditionnels */}
-      <h1 className={passe ? "passed" : "not-passed"}>{displayedName}</h1>
-      <h2>{displayedGenre}</h2>
+      <h1 className={passe ? "passed" : "not-passed"}>
+        {displayedIdentity.nom}
+      </h1>
+      <h2>{displayedIdentity.genreFavori}</h2>
 
-      {/* Image du film ou icône de question */}
-      <div>{imageDisplay}</div>
-
-      {/* Titre du film */}
+      {/* Affichage du film */}
+      <div
+        className="film-container"
+        onClick={() => toggleReveal(setFilmRevealed, setFilmFlipClass)}
+      >
+        {displayedFilmImage}
+      </div>
       <h3>{displayedFilmName}</h3>
     </div>
   );
