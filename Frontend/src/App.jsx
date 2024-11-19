@@ -116,25 +116,22 @@ function App() {
   });
 
   const [isAnonymousMode, setIsAnonymousMode] = useState(false);
-
-  const toggleAnonymousMode = () => {
-    setIsAnonymousMode((prevState) => !prevState);
-  };
-
   const [selectedParticipant, setSelectedParticipant] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const mainContainerRef = useRef(null);
   const centralIndex = Math.floor(peopleList.length / 2);
 
+  const toggleAnonymousMode = () => {
+    setIsAnonymousMode((prevState) => !prevState);
+  };
   const handleDraw = () => {
     setIsDrawing(true);
 
-    // Révéler complètement le participant central avant le tirage
     const currentWinner = peopleList[centralIndex];
     setPeopleList((prevList) =>
       prevList.map((person) =>
         person.nom === currentWinner.nom
-          ? { ...person, isRevealed: true } // Révéler film et identité
+          ? { ...person, isRevealed: true }
           : person
       )
     );
@@ -150,7 +147,6 @@ function App() {
     startDraw(availablePeople);
   };
 
-  // Fonction fléchée lançant le tirage avec AvailablePeople comme argument.
   const startDraw = (availablePeople) => {
     const timeline = gsap.timeline({
       onComplete: () => {
@@ -197,13 +193,23 @@ function App() {
   };
 
   const finalizeDraw = (chosenPerson) => {
-    setPeopleList((prevList) =>
-      prevList.map((person) =>
-        person.nom === chosenPerson.nom
-          ? { ...person, passe: true, isRevealed: !isAnonymousMode }
-          : person
-      )
-    );
+    setPeopleList((prevList) => {
+      const remainingPeople = prevList.filter(
+        (person) => person.nom !== chosenPerson.nom
+      );
+
+      const shuffledRemaining = shuffleArray(remainingPeople);
+
+      const centralIndex = Math.floor(prevList.length / 2);
+      const newPeopleList = [
+        ...shuffledRemaining.slice(0, centralIndex),
+        { ...chosenPerson, passe: true, isRevealed: !isAnonymousMode },
+        ...shuffledRemaining.slice(centralIndex),
+      ];
+
+      return newPeopleList;
+    });
+
     setSelectedParticipant(chosenPerson);
     setIsDrawing(false);
   };

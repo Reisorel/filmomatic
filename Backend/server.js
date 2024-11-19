@@ -20,11 +20,11 @@ app.use(cors());
 app.use(express.json());
 
 // Charger les données de personnages depuis le fichier de données
-const initialPeopleList = dataFile.PEOPLE_LIST;
+const peopleListData = dataFile.PEOPLE_LIST;
 
 // Route API pour fournir la liste de personnes
 app.get("/api/people", (req, res) => {
-  res.json(initialPeopleList);
+  res.json(peopleListData);
 });
 
 // Servir l'application React en production

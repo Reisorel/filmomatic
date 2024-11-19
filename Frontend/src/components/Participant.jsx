@@ -30,16 +30,7 @@ export default function Participant({
     // Synchronise les états locaux avec les props initiales
     setFilmRevealed(isRevealed);
     setIdentityRevealed(isRevealed);
-
-    // Définit la classe de flip selon le mode anonyme
-    if (isAnonymousMode) {
-      setPhotoFlipClass("flip-to-anonymous");
-      setFilmFlipClass("flip-to-anonymous");
-    } else {
-      setPhotoFlipClass("flip-to-normal");
-      setFilmFlipClass("flip-to-normal");
-    }
-  }, [isRevealed, isAnonymousMode]);
+  }, [isRevealed]);
 
   const toggleReveal = (stateSetter, flipSetter) => {
     // Ajoute ou retire les classes de flip
@@ -52,9 +43,7 @@ export default function Participant({
 
   // Logique d'affichage pour l'identité
   const displayedIdentity =
-    isAnonymousMode && !identityRevealed
-      ? anonymousProfile
-      : { nom, genreFavori, photo };
+    isAnonymousMode && !identityRevealed ? anonymousProfile : { nom, genreFavori, photo }
 
   // Logique d'affichage pour le film
   const displayedFilmName = filmRevealed ? filmName : anonymousProfile.filmName;
