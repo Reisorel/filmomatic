@@ -32,6 +32,7 @@ export default function Participant({
     setIdentityRevealed(isRevealed);
   }, [isRevealed]);
 
+
   const toggleReveal = (stateSetter, flipSetter) => {
     // Ajoute ou retire les classes de flip
     flipSetter((prev) =>
