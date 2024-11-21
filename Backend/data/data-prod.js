@@ -7,7 +7,7 @@ const PEOPLE_LIST = [
     genreFavori: "Comédie Musicale",
     passe: true,
     isRevealed: true,
-    film: "Rocky Horror Picture Show",
+    filmName: "Rocky Horror Picture Show",
     photo: "/assets/people_prod/Sharman.png",
     image: "/assets/movies/rocky.png",
     useQuestionIcon: false
@@ -17,7 +17,7 @@ const PEOPLE_LIST = [
     genreFavori: "Historique",
     passe: false,
     isRevealed: false, // Aligné avec la logique du dev
-    film: "Les Visiteurs",
+    filmName: "Les Visiteurs",
     photo: "/assets/people_prod/Poire.png",
     image: "/assets/movies/visiteurs.png",
     useQuestionIcon: true
@@ -27,49 +27,49 @@ const PEOPLE_LIST = [
     genreFavori: "Horreur",
     passe: true,
     isRevealed: true,
-    film: "The Shining",
+    filmName: "The Shining",
     photo: "/assets/people_prod/Kubrick.png",
     image: "/assets/movies/shining.jpg",
     useQuestionIcon: false
   },
   {
-    nom: "Jean-Pierre Jeunet",
-    genreFavori: "Comédie Romantique",
+    nom: "Steven Spielberg",
+    genreFavori: "Science Fiction",
     passe: false,
     isRevealed: false, // Aligné avec la logique du dev
-    film: "Amélie Poulain",
-    photo: "/assets/people_prod/Jeunet.png",
-    image: "/assets/movies/poulain.png",
+    filmName: "Indiana Jones Et Les Aventuriers De L'Arche Perdue",
+    photo: "/assets/people_prod/Spielberg.jpg",
+    image: "/assets/movies/Arche.jpg",
     useQuestionIcon: true
   },
   {
-    nom: "Marc Esposito",
-    genreFavori: "Fantasy",
+    nom: "Joel Coen",
+    genreFavori: "Comédie",
     passe: false,
     isRevealed: false, // Aligné avec la logique du dev
-    film: "Le Coeur Des Hommes",
-    photo: "/assets/people_prod/Esposito.png",
-    image: "/assets/movies/coeur.jpg",
+    filmName: "The Big Lebowsky",
+    photo: "/assets/people_prod/Coen.jpg",
+    image: "/assets/movies/Lebowsky.jpg",
     useQuestionIcon: true
   },
   {
     nom: "Jordan Peele",
-    genreFavori: "Science Fiction",
+    genreFavori: "Epouvante",
     passe: false,
     isRevealed: false, // Aligné avec la logique du dev
-    film: "Nope",
+    filmName: "Nope",
     photo: "/assets/people_prod/Peele.png",
     image: "/assets/movies/nope.png",
     useQuestionIcon: true
   },
   {
-    nom: "Paul Weitz",
-    genreFavori: "Comédie US",
+    nom: "Ridley Scott",
+    genreFavori: "Road Movie",
     passe: false,
     isRevealed: false, // Aligné avec la logique du dev
-    film: "American Pie 1",
-    photo: "/assets/people_prod/Weitz.png",
-    image: "/assets/movies/american.png",
+    filmName: "Thelma & Louise",
+    photo: "/assets/people_prod/Ridley.jpg",
+    image: "/assets/movies/thelma.jpg",
     useQuestionIcon: true
   }
 ];

@@ -21,6 +21,9 @@ export default function Participant({
     image: <FaQuestion className="participant-film-icon" />,
   };
 
+  console.log("filmName:", filmName);
+
+
   const [filmRevealed, setFilmRevealed] = useState(isRevealed); // Contrôle le film
   const [identityRevealed, setIdentityRevealed] = useState(isRevealed); // Contrôle l'identité
   const [photoFlipClass, setPhotoFlipClass] = useState(""); // Classe d'animation pour la photo
