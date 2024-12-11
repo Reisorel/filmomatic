@@ -5,6 +5,7 @@
   margin-top: 20px;
   margin-bottom: 55px;
   margin-left: 8px;
+  margin-right: 8px;
   text-align: center;
   cursor: pointer;
   color: white;
@@ -42,4 +43,26 @@
 .anonymous-button:hover {
   transform: translateY(-5px);
   background-color: rgb(95, 14, 14);
+}
+
+.snow-button {
+  background-color: #E50914;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 55px;
+  margin-left: 8px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s;
+  margin-right: 10px;
+}
+
+.snow-button:hover {
+  transform: translateY(-5px);
+  background-color: rgb(255, 255, 255);
+  color: black;
 }

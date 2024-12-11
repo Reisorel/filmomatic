@@ -16,6 +16,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true); // Indicateur de chargement
   const mainContainerRef = useRef(null);
   const centralIndex = Math.floor(peopleList.length / 2);
+  const [isSnowing, setIsSnowing] = useState(false); // État de la neige
 
   // Mélange aléatoire d'un tableau
   const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
@@ -155,15 +156,24 @@ function App() {
     return <div>Chargement des participants...</div>;
   }
 
+  // Fonction pour activer/désactiver la neige
+  const toggleSnowing = () => {
+    setIsSnowing((prev) => !prev);
+  };
+
   return (
     <div className="app-container">
       <Header />
-      <Background className="background-container">
+      <Background
+      className="background-container"
+      isSnowing={isSnowing}
+      >
         <Launching
           handleDraw={handleDraw}
           isDrawing={isDrawing}
           isAnonymousMode={isAnonymousMode}
           toggleAnonymousMode={toggleAnonymousMode}
+          toggleSnowing={toggleSnowing} isSnowing={isSnowing}
         />
         <div className="main-container" ref={mainContainerRef}>
           {peopleList.map((person, index) => (

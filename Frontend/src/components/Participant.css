@@ -119,14 +119,6 @@
   animation: flipToNormal 0.5s ease-out forwards;
 }
 
-.film-container.flip-to-anonymous {
-  animation: flipToAnonymous 0.5s ease-out forwards;
-}
-
-.film-container-photo.flip-to-normal {
-  animation: flipToNormal 0.5s ease-out forwards;
-}
-
 /* Animation de demi-tour pour aller en mode anonyme */
 @keyframes flipToAnonymous {
   0% {
