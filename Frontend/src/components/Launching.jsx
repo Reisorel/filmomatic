@@ -16,7 +16,7 @@ export default function Launching({ handleDraw, isDrawing, toggleAnonymousMode, 
       </button>
 
       <button onClick={toggleSnowing} className="snow-button">
-        {isSnowing ? "Mode normal ❄" : "Mode Noël 🎄"}
+        {isSnowing ? "Mode normal 💁‍♂️" : "Mode Noël 🎄"}
       </button>
     </div>
   );
